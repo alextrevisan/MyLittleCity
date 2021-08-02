@@ -1,0 +1,79 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Building",
+"language": "GDScript",
+"path": "res://Building.gd"
+}, {
+"base": "Reference",
+"class": "BuildingInfo",
+"language": "GDScript",
+"path": "res://BuildingInfo.gd"
+}, {
+"base": "Reference",
+"class": "Constants",
+"language": "GDScript",
+"path": "res://Constants.gd"
+}, {
+"base": "Reference",
+"class": "GameState",
+"language": "GDScript",
+"path": "res://GameState.gd"
+} ]
+_global_script_class_icons={
+"Building": "",
+"BuildingInfo": "",
+"Constants": "",
+"GameState": ""
+}
+
+[application]
+
+config/name="MyLittleCity"
+run/main_scene="res://teste.tscn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=64
+window/size/height=64
+window/size/resizable=false
+window/size/test_width=256
+window/size/test_height=256
+window/per_pixel_transparency/allowed=true
+window/per_pixel_transparency/enabled=true
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[input]
+
+input_a={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+input_b={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+2d/snapping/use_gpu_pixel_snap=true
+environment/default_environment="res://default_env.tres"

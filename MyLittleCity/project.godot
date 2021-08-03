@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "GameState",
 "language": "GDScript",
 "path": "res://GameState.gd"
+}, {
+"base": "Control",
+"class": "GameUI",
+"language": "GDScript",
+"path": "res://GameUI.gd"
 } ]
 _global_script_class_icons={
 "Building": "",
 "BuildingInfo": "",
 "Constants": "",
-"GameState": ""
+"GameState": "",
+"GameUI": ""
 }
 
 [application]

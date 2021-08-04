@@ -52,7 +52,7 @@ func _input(event):
 		selectedItemMenu.texture.set_region(Rect2(selectedIconPosition.x, 0,10,10))
 
 func updateSelectedBuilding(value:int):
-	if selectedIconPosition.x >= 10 || selectedIconPosition.x <= 70:
+	if currentMenuSelected+value >= 0 && currentMenuSelected+value <= 10:
 		selectedIconPosition.x += value * 10
 		menuPosition.x += -value * menuMoveScale
 		currentMenuSelected += value
@@ -60,7 +60,10 @@ func updateSelectedBuilding(value:int):
 		emit_signal("onSelectedIconPosition", currentMenuSelected)
 		
 func updateCostLabel():
-	cost_label.text = "$ %d" % Constants.BuildPrices[currentMenuSelected]
+	if Constants.Upkeep[currentMenuSelected] == 0:
+		cost_label.text = "$ %d" % Constants.BuildPrices[currentMenuSelected]
+	else:
+		cost_label.text = "$ %d/$ %d" % [Constants.BuildPrices[currentMenuSelected], Constants.Upkeep[currentMenuSelected]]
 	
 func updateUI():
 	if(display_year == true):

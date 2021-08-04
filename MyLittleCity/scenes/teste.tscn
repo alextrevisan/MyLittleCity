@@ -29,7 +29,7 @@ position = Vector2( 0, -55 )
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 5, 5 )
 format = 1
-tile_data = PoolIntArray( 1179646, 0, 65545, 1179647, 0, 2, 1114112, 0, 2, 1114113, 0, 9 )
+tile_data = PoolIntArray( 393203, 0, 65545, 393204, 0, 2, 393205, 0, 2, 393206, 0, 2, 393207, 0, 1, 458743, 0, 65536, 458744, 0, 1, 524280, 0, 3, 589816, 0, 65536, 589817, 0, 2, 589818, 0, 2, 589819, 0, 2, 589820, 0, 2, 589821, 0, 1, 655357, 0, 3, 720893, 0, 3, 786429, 0, 3, 851965, 0, 3, 917501, 0, 3, 983037, 0, 3, 1048573, 0, 3, 1114109, 0, 3, 1179645, 0, 6, 1179646, 0, 2, 1179647, 0, 2, 1114112, 0, 2, 1114113, 0, 9, 1245181, 0, 3, 1310717, 0, 3, 1376250, 0, 0, 1376251, 0, 2, 1376252, 0, 2, 1376253, 0, 65537, 1441786, 0, 3, 1507318, 0, 65545, 1507319, 0, 2, 1507320, 0, 2, 1507321, 0, 2, 1507322, 0, 65537 )
 
 [node name="mapa04" type="Sprite" parent="TileMap"]
 visible = false
@@ -71,7 +71,7 @@ texture = SubResource( 1 )
 [node name="selection_2x" type="AnimatedSprite" parent="GameUI"]
 position = Vector2( 34.9799, 59 )
 frames = ExtResource( 5 )
-frame = 6
+frame = 5
 playing = true
 
 [node name="cost_label" type="Label" parent="GameUI"]
@@ -81,7 +81,7 @@ anchor_bottom = 0.5
 margin_top = 48.0
 margin_right = 64.0
 margin_bottom = 53.0
-text = "COst: $200"
+text = "$ 2/$ 1"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -105,24 +105,28 @@ position = Vector2( 34.9799, 59 )
 [node name="selection_1x" type="AnimatedSprite" parent="GameUI/mapSelection"]
 position = Vector2( -2.97992, -27 )
 frames = ExtResource( 4 )
-frame = 4
+frame = 3
 playing = true
 
 [node name="selection_2x" type="AnimatedSprite" parent="GameUI/mapSelection"]
 visible = false
 position = Vector2( 0.0200806, -24 )
 frames = ExtResource( 5 )
+frame = 9
 playing = true
 
 [node name="selection_3x" type="AnimatedSprite" parent="GameUI/mapSelection"]
 visible = false
 position = Vector2( 2.02008, -22 )
 frames = ExtResource( 6 )
-frame = 7
+frame = 6
 playing = true
 
 [node name="GameTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
 
 [connection signal="update_values" from="GameState" to="GameUI" method="_on_GameState_update_values"]
 [connection signal="onSelectedIconPosition" from="GameUI" to="." method="_on_GameUI_onSelectedIconPosition"]
 [connection signal="timeout" from="GameUI/ui_info_timer" to="GameUI" method="_on_ui_info_timer_timeout"]
+[connection signal="timeout" from="GameTimer" to="GameState" method="_on_GameTimerTick"]

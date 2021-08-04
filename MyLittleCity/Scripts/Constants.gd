@@ -64,3 +64,7 @@ const Months:Dictionary = {
 	10 : "Nov",
 	11 : "Dec",
 }
+
+const HOUSE_1x1 = 1
+const HOUSE_1x2 = 2
+const HOUSE_2x2 = 3

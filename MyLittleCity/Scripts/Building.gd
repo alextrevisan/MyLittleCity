@@ -49,6 +49,18 @@ func Tick():
 func Remove():
 	removed = true
 	
+func BuildingCanUpgrade():
+	var topBuilding = gameState.GetBuilding(x, y-1)
+	match populationDensity:
+		Constants.HOUSE_1x2:
+			if topBuilding == null:
+				return false
+			if topBuilding.buildType != buildType:
+				return false
+			if gameState.GetBuilding(x, y-1).populationDensity <= populationDensity:
+				return true
+	return false
+	
 func upgrade_buildings():
 	yield(tileMap.get_tree().create_timer(2.0), "timeout")
 	if removed:
@@ -61,10 +73,9 @@ func upgrade_buildings():
 		
 	populationDensity = min(populationDensity + 1, maxDensity)
 	
-	if populationDensity == 2:
-		if gameState.GetBuilding(x, y-1) != null and gameState.GetBuilding(x, y-1).populationDensity <= populationDensity:
-			gameState.AddBuilding(Constants.REMOVE_TILE, x, y-1)#remove previous building to upgrade
-			tileMap.set_cell(x,y-1,UpgradeResidentialIndex[populationDensity]+1,false, false, false, Vector2(0,0))
+	if BuildingCanUpgrade():
+		gameState.AddBuilding(Constants.REMOVE_TILE, x, y-1)#remove previous building to upgrade
+		tileMap.set_cell(x,y-1,UpgradeResidentialIndex[populationDensity]+1,false, false, false, Vector2(0,0))
 
 	tileMap.set_cell(x,y,UpgradeResidentialIndex[populationDensity],false, false, false, Vector2(0,0))
 	

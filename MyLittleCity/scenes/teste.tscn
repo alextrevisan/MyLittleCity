@@ -71,7 +71,6 @@ texture = SubResource( 1 )
 [node name="selection_2x" type="AnimatedSprite" parent="GameUI"]
 position = Vector2( 34.9799, 59 )
 frames = ExtResource( 5 )
-frame = 5
 playing = true
 
 [node name="cost_label" type="Label" parent="GameUI"]
@@ -105,21 +104,21 @@ position = Vector2( 34.9799, 59 )
 [node name="selection_1x" type="AnimatedSprite" parent="GameUI/mapSelection"]
 position = Vector2( -2.97992, -27 )
 frames = ExtResource( 4 )
-frame = 3
+frame = 8
 playing = true
 
 [node name="selection_2x" type="AnimatedSprite" parent="GameUI/mapSelection"]
 visible = false
 position = Vector2( 0.0200806, -24 )
 frames = ExtResource( 5 )
-frame = 9
+frame = 4
 playing = true
 
 [node name="selection_3x" type="AnimatedSprite" parent="GameUI/mapSelection"]
 visible = false
 position = Vector2( 2.02008, -22 )
 frames = ExtResource( 6 )
-frame = 6
+frame = 1
 playing = true
 
 [node name="GameTimer" type="Timer" parent="."]

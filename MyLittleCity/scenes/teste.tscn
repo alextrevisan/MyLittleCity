@@ -1,0 +1,128 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/GameUI.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
+[ext_resource path="res://scenes/mapa02.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/selection_1x.tres" type="SpriteFrames" id=4]
+[ext_resource path="res://assets/selection_2x.tres" type="SpriteFrames" id=5]
+[ext_resource path="res://assets/selection_3x.tres" type="SpriteFrames" id=6]
+[ext_resource path="res://assets/tiles.tres" type="TileSet" id=7]
+[ext_resource path="res://assets/icon_list.png" type="Texture" id=8]
+[ext_resource path="res://assets/pixel_font_theme.tres" type="Theme" id=9]
+[ext_resource path="res://mapa02.png" type="Texture" id=10]
+[ext_resource path="res://Scripts/GameState.gd" type="Script" id=11]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 10, 10 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="GameState" type="Node" parent="."]
+script = ExtResource( 11 )
+
+[node name="TileMap" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -55 )
+
+[node name="GameTileMap" type="TileMap" parent="TileMap"]
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 5, 5 )
+format = 1
+tile_data = PoolIntArray( 1179646, 0, 65545, 1179647, 0, 2, 1114112, 0, 2, 1114113, 0, 9 )
+
+[node name="mapa04" type="Sprite" parent="TileMap"]
+visible = false
+position = Vector2( 97, -84 )
+rotation = 3.14159
+texture = ExtResource( 10 )
+offset = Vector2( -53, 66 )
+
+[node name="mapa03" type="Sprite" parent="TileMap"]
+visible = false
+position = Vector2( -18, -48 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 10 )
+offset = Vector2( -131.527, 101.115 )
+
+[node name="mapa02" type="Sprite" parent="TileMap"]
+visible = false
+position = Vector2( -97, 84 )
+texture = ExtResource( 10 )
+offset = Vector2( -53, 66 )
+
+[node name="GameUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 9 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="icon_list" type="Sprite" parent="GameUI"]
+position = Vector2( 75, 59 )
+texture = ExtResource( 8 )
+
+[node name="selectedItemMenu" type="Sprite" parent="GameUI"]
+position = Vector2( 5, 59 )
+texture = SubResource( 1 )
+
+[node name="selection_2x" type="AnimatedSprite" parent="GameUI"]
+position = Vector2( 34.9799, 59 )
+frames = ExtResource( 5 )
+frame = 6
+playing = true
+
+[node name="cost_label" type="Label" parent="GameUI"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = 48.0
+margin_right = 64.0
+margin_bottom = 53.0
+text = "COst: $200"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ui_info" type="Label" parent="GameUI"]
+margin_right = 39.0
+margin_bottom = 5.0
+text = "Mar 1900"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ui_info_timer" type="Timer" parent="GameUI"]
+wait_time = 2.0
+autostart = true
+
+[node name="mapSelection" type="Node2D" parent="GameUI"]
+position = Vector2( 34.9799, 59 )
+
+[node name="selection_1x" type="AnimatedSprite" parent="GameUI/mapSelection"]
+position = Vector2( -2.97992, -27 )
+frames = ExtResource( 4 )
+frame = 4
+playing = true
+
+[node name="selection_2x" type="AnimatedSprite" parent="GameUI/mapSelection"]
+visible = false
+position = Vector2( 0.0200806, -24 )
+frames = ExtResource( 5 )
+playing = true
+
+[node name="selection_3x" type="AnimatedSprite" parent="GameUI/mapSelection"]
+visible = false
+position = Vector2( 2.02008, -22 )
+frames = ExtResource( 6 )
+frame = 7
+playing = true
+
+[node name="GameTimer" type="Timer" parent="."]
+
+[connection signal="update_values" from="GameState" to="GameUI" method="_on_GameState_update_values"]
+[connection signal="onSelectedIconPosition" from="GameUI" to="." method="_on_GameUI_onSelectedIconPosition"]
+[connection signal="timeout" from="GameUI/ui_info_timer" to="GameUI" method="_on_ui_info_timer_timeout"]

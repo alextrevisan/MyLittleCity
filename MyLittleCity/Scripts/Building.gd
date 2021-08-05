@@ -95,7 +95,7 @@ func upgrade_buildings():
 	var topBuilding = gameState.GetBuilding(x,y-1)
 	#print("cell = %d" % cell)
 	if topBuilding != null:
-		if topBuilding.buildType == Constants.LOW_DENSITY_RESIDENTIAL || topBuilding.buildType == 2 || topBuilding.buildType == 4 || topBuilding.buildType == 6:
+		if topBuilding.buildType == Constants.LOW_DENSITY_RESIDENTIAL || topBuilding.buildType == 2 || topBuilding.buildType == 4 || topBuilding.buildType == 6 || topBuilding.buildType == Constants.RESIDENTIAL_UPGRADE:
 			maxDensity = 2
 		
 	populationDensity = min(populationDensity + 1, maxDensity)

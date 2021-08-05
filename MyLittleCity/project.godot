@@ -48,6 +48,10 @@ config/name="MyLittleCity"
 run/main_scene="res://scenes/teste.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Debounce="*res://Debounce.gd"
+
 [display]
 
 window/size/width=64

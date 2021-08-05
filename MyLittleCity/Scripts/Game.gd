@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var tilemap = $"TileMap"
-onready var gameTilemap = $"TileMap/GameTileMap"
+onready var gameTilemap = $"TileMap/Navigation2D/GameTileMap"
 onready var gameState:GameState = $"GameState"
 onready var mapPosition:Vector2 = tilemap.position
 onready var isSelectingMenu:bool = true
@@ -56,6 +56,8 @@ func _input(event):
 		mapPosition.y += mapMoveScale
 		currentTileY -= 1
 
-
+func funcToDebounce():
+	print("my function!")
+	
 func _on_GameUI_onSelectedIconPosition(index):
 	currentMenuSelected = index

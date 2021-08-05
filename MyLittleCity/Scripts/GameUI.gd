@@ -18,7 +18,6 @@ const menuMoveScale:int = 10
 func _ready():
 	mapSelection.visible = !isSelectingMenu
 	ui_info.text = gameState.GetDateStr()
-	updateCostLabel()
 	
 func _physics_process(delta):
 	if !isSelectingMenu:

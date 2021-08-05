@@ -7,7 +7,7 @@ var _currentMonth:int = 0
 var _currentYear:int = 1900
 var _currentMap:Array
 
-onready var tileMap:TileMap = $"../TileMap/GameTileMap"
+onready var tileMap:TileMap = $"../TileMap/Navigation2D/GameTileMap"
 
 func _init():
 	_currentMap.resize(60)
@@ -19,10 +19,14 @@ func _init():
 	
 func Add(value:int):
 	_currentMoney = _currentMoney + value
-	emit_signal("update_values")
+	Debounce.Debounce(funcref(self, "EmitSignalUpdateValues"))
+	
 
 func Subtract(value:int):
 	_currentMoney = _currentMoney - value
+	Debounce.Debounce(funcref(self, "EmitSignalUpdateValues"))
+
+func EmitSignalUpdateValues():
 	emit_signal("update_values")
 
 func GetMoney()->int:
@@ -39,9 +43,13 @@ func GetBuilding(x, y):
 
 func AddBuilding(building:int, x:int, y:int):
 	if building == Constants.REMOVE_TILE:
+		if _currentMap[x][y] == null:
+			return
 		_currentMap[x][y].Remove()
 		_currentMap[x][y] = null
 	else:
+		if _currentMap[x][y] != null:
+			_currentMap[x][y].Remove()
 		_currentMap[x][y] = Building.new(building, self, x, y, tileMap)
 	
 

@@ -6,6 +6,8 @@ const LOW_DENSITY_INDUSTRIAL:int = 2
 const ROAD:int = 3
 const REMOVE_TILE:int = 4
 
+const RESIDENTIAL_UPGRADE:int = 1000
+
 const BuildPrices:Dictionary = {
 	LOW_DENSITY_RESIDENTIAL : 0,
 	LOW_DENSITY_COMERCIAL : 0,

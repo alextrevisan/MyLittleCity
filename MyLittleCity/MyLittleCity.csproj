@@ -1,0 +1,9 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <LangVersion>9</LangVersion>
+    <TargetFrameworks>net5.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\MyLittleCity\Buildings" />
+  </ItemGroup>
+</Project>

@@ -12,9 +12,7 @@ public class Game : Node2D
 	private bool _isSelectingMenu = true;
 	private int _currentTileX = 6;
 	private int _currentTileY = 17;
-	private Vector2 _selectedIconPosition = new Vector2(0, 0);
 	private MenuItems _currentMenuSelected = 0;
-	private bool _displayYear = true;
 	private Buildings _buildings;
 
 	private const int MapMoveScale = 5;
@@ -60,8 +58,8 @@ public class Game : Node2D
 
 		if (@event.IsActionPressed("ui_left", false))
 		{
-			if (_mapPosition.x > 25)
-				return;
+			//if (_mapPosition.x > 25)
+			//	return;
 			_currentTileX--;
 			_mapPosition.x += MapMoveScale;
 		}

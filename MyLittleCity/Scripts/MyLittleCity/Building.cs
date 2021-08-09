@@ -1,143 +1,104 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using Godot;
 using Object = Godot.Object;
 
 namespace MyLittleCity.Scripts.MyLittleCity
 {
-    public class Building
+    public abstract class Building
     {
         public BuildType BuildType { get; private set; }
         public int PowerAmount { get; set; }
 
-        private int _populationDensity;
-        private bool _onFire;
-        private int _x;
-        private int _y;
-        private GameState _gameState;
-        private TileMap _tileMap;
-        private bool _removed;
-        private System.Timers.Timer aTimer;
-        private static Mutex _mutex = new ();
-        public bool CanUpgrade()
+            
+        protected readonly int X;
+        protected readonly int Y;
+        protected readonly GameState GameState;
+        public readonly TileMap TileMap;
+        protected bool Removed;
+        private System.Timers.Timer _timer;
+        protected static readonly Mutex Mutex = new ();
+        protected readonly Navigation2D Navigation2D;
+        private static Vector2 _startPos = new Vector2(-48, 58);
+        protected bool HasCar = false;
+        public bool CarArrived = false;
+        public virtual bool CanUpgrade()
         {
             return false;
-            
         }
 
-        public bool IsPowerLine()
+        public virtual bool IsPowerLine()
         {
             return true;
-            
         }
 
-        public Building(BuildType buildType, GameState gameState, int x, int y, TileMap tileMap)
+        protected Vector2? GetNearestRoad()
+        {
+            if (BuildType != BuildType.LowDensityResidential)
+                return null;
+            var minX = Math.Max(0, X - 2);
+            var minY = Math.Max(0, Y - 2);
+            var maxX = Math.Min(60, X + 2);
+            var maxY = Math.Min(60, Y + 2);
+            
+            for (var x = minX; x <= maxX; x++)
+            {
+                for (var y = minY; y <= maxY; y++)
+                {
+                    if (GameState.Building[x][y]?.BuildType == BuildType.Road)
+                        return new Vector2(x, y);
+                }
+            }
+
+            return null;
+        }
+
+        protected Building(BuildType buildType, GameState gameState, int x, int y, TileMap tileMap, Navigation2D navigation2D)
         {
             BuildType = buildType;
-            _gameState = gameState;
-            _x = x;
-            _y = y;
-            _tileMap = tileMap;
+            GameState = gameState;
+            X = x;
+            Y = y;
+            TileMap = tileMap;
+            Navigation2D = navigation2D;
             PowerAmount = 0;
-            _populationDensity = 0;
-            _onFire = false;
-            _removed = false;
+            Removed = false;
+            
             SetTimer();
         }
 
-        public void Remove()
+        protected static BuildTileIndex BuildTileIndex { get; }
+        protected static Upkeep Upkeep { get; }
+        protected static TaxGenerated TaxGenerated { get; }
+        
+        public virtual void Remove()
         {
-            _removed = true;
-            
-            if (BuildType != BuildType.LowDensityResidential) return;
-            
-            if (_populationDensity == 2)
-                _gameState.ExecuteAction(MenuItems.RemoveTile, _x, _y - 1);
+            Removed = true;
         }
 
-        public void Tick()
+        public virtual void Tick()
         {
-            if (BuildType == BuildType.ResidentialUpgrade)
-                return;
-            
-            _gameState.SubtractMoney(Upkeep[BuildType]);
-            
-            if(BuildType == BuildType.LowDensityResidential)
-                _gameState.AddMoney(TaxGenerated[_populationDensity]);
+
         }
 
-        private TaxGenerated TaxGenerated { get; }
+        
 
-        private Upkeep Upkeep { get; }
+        
         
         private void SetTimer()
         {
-            aTimer = new System.Timers.Timer(2000);
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = false;
-            aTimer.Enabled = true;
+            _timer = new System.Timers.Timer(2000);
+            _timer.Elapsed += OnTimedEvent;
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
         }
 
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        protected virtual void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            _mutex.Lock();
-            if (_removed || BuildType == BuildType.ResidentialUpgrade)
-            {
-                _mutex.Unlock();
-                return;
-            }
-                
-            var maxDensity = 1;
-            var topBuilding = _gameState.Building[_x][_y - 1];
-            if (topBuilding is not null)
-            {
-                if (topBuilding.BuildType is BuildType.LowDensityResidential or BuildType.ResidentialUpgrade && topBuilding._populationDensity <= _populationDensity)
-                    maxDensity = 2;
-            }
-
-            _populationDensity = Math.Min(_populationDensity + 1, maxDensity);
-            CheckForResidentialUpgrade();
-            aTimer.Start();
-            _mutex.Unlock();
+            if(Removed)
+                _timer.Stop();
         }
-
-        private bool ResidentialCanUpgrade()
-        {
-            var topBuilding = _gameState.Building[_x][_y - 1];
-            if (topBuilding == null)
-                return false;
-            switch (_populationDensity)
-            {
-                case 2:
-                {
-                    if (topBuilding.BuildType != BuildType)
-                        return false;
-                    if (topBuilding._populationDensity <= _populationDensity)
-                        return true;
-                    return false;
-                }
-                default:
-                    return false;
-            }
-        }
-        
-        private void CheckForResidentialUpgrade()
-        {
-            //using var locker = new MutexLocker(_mutex);
-            
-            if (BuildType != BuildType.LowDensityResidential)
-            {
-                return;
-            }
-                
-            if (ResidentialCanUpgrade())
-            {
-                _gameState.ExecuteAction(MenuItems.ResidentialUpgrade, _x, _y - 1);
-                _tileMap.SetCell(_x, _y -1, UpgradeResidential[_populationDensity]+1, false, false, false, new Vector2(0,0));
-            }
-            _tileMap.SetCell(_x, _y, UpgradeResidential[_populationDensity], false, false, false, new Vector2(0,0));
-        }
-
-        private static readonly int[] UpgradeResidential = {2,4,5,4,4};
     }
 }

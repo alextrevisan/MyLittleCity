@@ -1,32 +1,34 @@
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using Godot;
 using MyLittleCity.Scripts.MyLittleCity;
+using MyLittleCity.Scripts.MyLittleCity.Buildings;
 using MyLittleCity.Scripts.Utils;
 
 namespace MyLittleCity.Scripts
 {
 	public class GameState : Node
 	{
-		public int Money { get; set; } = 70000;
+		public int Money { get; private set; } = 70000;
 
 		public string MoneyString => $"$ {Money}";
 
-		public int Month { get; set; } = 0;
-		public int Year { get; set; } = 1900;
-		
-		private static readonly MonthToString MonthToString;
-		
-		public string DateString => $"{MonthToString[Month]} {Year}";
+		private DateTime _dateTime = new (1900, 1, 1);
+
+		public string DateString => $"{_dateTime:MMM yyyy}";
 		public List<List<Building?>> Building { get; } = new ();
 		
-		private TileMap _tileMap;
+		private TileMap? _tileMap;
+		private Navigation2D? _navigation2D;
+		private BuildingFactory _buildingFactory;
 
 		public override void _Ready()
 		{
 			base._Ready();
 			_tileMap = GetNode<TileMap>("../TileMap/Navigation2D/GameTileMap");
+			_navigation2D = GetNode<Navigation2D>("../TileMap/Navigation2D");
 			for (var x = 0; x < 60; x++)
 			{
 				Building.Add(new List<Building?>());
@@ -35,6 +37,8 @@ namespace MyLittleCity.Scripts
 					Building[x].Add(null);
 				}
 			}
+
+			_buildingFactory = new BuildingFactory(this, _tileMap, _navigation2D);
 		}
 		
 
@@ -60,7 +64,7 @@ namespace MyLittleCity.Scripts
 			else
 			{
 				Building[x][y]?.Remove();
-				Building[x][y] = new Building(MenuItemToBuildType[menuItem], this, x, y, _tileMap);
+				Building[x][y] = _buildingFactory.Make(MenuItemToBuildType[menuItem], x, y);
 			}
 		}
 
@@ -78,12 +82,7 @@ namespace MyLittleCity.Scripts
 			}
 
 
-			Month ++;
-			if (Month >= 12)
-			{
-				Year++;
-				Month = 0;
-			}
+			_dateTime = _dateTime.AddMonths(1);
 		}
 
 		private MenuItemToBuildType MenuItemToBuildType { get; }

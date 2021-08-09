@@ -7,7 +7,8 @@
         LowDensityIndustrial = 2,
         Road = 3,
         RemoveTile = 4,
-        
+        WindTurbine = 5,
+
         ResidentialUpgrade = 9000,
     }
 }

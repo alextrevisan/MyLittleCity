@@ -8,40 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Reference",
-"class": "Building",
-"language": "GDScript",
-"path": "res://Scripts/Building.gd"
-}, {
-"base": "Reference",
-"class": "Buildings",
-"language": "GDScript",
-"path": "res://Scripts/Buildings.gd"
-}, {
-"base": "Reference",
-"class": "Constants",
-"language": "GDScript",
-"path": "res://Scripts/Constants.gd"
-}, {
-"base": "Node",
-"class": "GameState",
-"language": "GDScript",
-"path": "res://Scripts/GameState.gd"
-}, {
-"base": "Control",
-"class": "GameUI",
-"language": "GDScript",
-"path": "res://Scripts/GameUI.gd"
-} ]
-_global_script_class_icons={
-"Building": "",
-"Buildings": "",
-"Constants": "",
-"GameState": "",
-"GameUI": ""
-}
-
 [application]
 
 config/name="MyLittleCity"

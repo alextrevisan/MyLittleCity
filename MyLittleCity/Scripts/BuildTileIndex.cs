@@ -21,6 +21,8 @@ namespace MyLittleCity.Scripts
                     
                     case MenuItems.Road:
                         return 0;
+                    case MenuItems.WindTurbine:
+                        return 8;
                     
                     case MenuItems.RemoveTile:
                     default:

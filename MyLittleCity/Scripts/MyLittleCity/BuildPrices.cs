@@ -18,6 +18,8 @@
                         return RoadPrice;
                     case MenuItems.RemoveTile:
                         return RemoveTilePrice;
+                    case MenuItems.WindTurbine:
+                        return 5000;
                     default:
                         return 0;
                 }

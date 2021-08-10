@@ -21,14 +21,15 @@ namespace MyLittleCity.Scripts
 		public static List<List<Building?>> Building { get; } = new ();
 		
 		private TileMap? _tileMap;
-		private Navigation2D? _navigation2D;
+		private Navigation2D? _roadsNavigation2D;
+		private Navigation2D? _powerLinesNavigation2D;
 		private BuildingFactory _buildingFactory;
 
 		public override void _Ready()
 		{
 			base._Ready();
 			_tileMap = GetNode<TileMap>("../TileMap/Navigation2D/GameTileMap");
-			_navigation2D = GetNode<Navigation2D>("../TileMap/Navigation2D");
+			_roadsNavigation2D = GetNode<Navigation2D>("../TileMap/Navigation2D");
 			for (var x = 0; x < 60; x++)
 			{
 				Building.Add(new List<Building?>());
@@ -38,7 +39,7 @@ namespace MyLittleCity.Scripts
 				}
 			}
 
-			_buildingFactory = new BuildingFactory(this, _tileMap, _navigation2D);
+			_buildingFactory = new BuildingFactory(this, _tileMap, _roadsNavigation2D);
 		}
 		
 

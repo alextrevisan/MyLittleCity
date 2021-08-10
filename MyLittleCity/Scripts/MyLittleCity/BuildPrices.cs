@@ -9,15 +9,15 @@
                 switch (menuItem)
                 {
                     case MenuItems.LowDensityResidential:
-                        return LowDensityResidentialPrice;
+                        return 0;
                     case MenuItems.LowDensityComercial:
-                        return LowDensityComercialPrice;
+                        return 0;
                     case MenuItems.LowDensityIndustrial:
-                        return LowDensityIndustrialPrice;
+                        return 0;
                     case MenuItems.Road:
-                        return RoadPrice;
+                        return 200;
                     case MenuItems.RemoveTile:
-                        return RemoveTilePrice;
+                        return 50;
                     case MenuItems.WindTurbineLow:
                         return 5000;
                     default:
@@ -25,11 +25,5 @@
                 }
             }
         }
-
-        private const int LowDensityResidentialPrice = 0;
-        private const int LowDensityComercialPrice = 0;
-        private const int LowDensityIndustrialPrice = 0;
-        private const int RoadPrice = 200;
-        private const int RemoveTilePrice = 50;
     }
 }

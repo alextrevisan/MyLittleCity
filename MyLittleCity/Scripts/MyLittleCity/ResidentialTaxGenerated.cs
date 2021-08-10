@@ -1,6 +1,6 @@
 ﻿namespace MyLittleCity.Scripts.MyLittleCity
 {
-    public struct TaxGenerated
+    public struct ResidentialTaxGenerated
     {
         public int this[int populationDensity]
         {

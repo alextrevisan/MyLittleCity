@@ -12,7 +12,7 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
         public override void Tick()
         {
             base.Tick();
-            GameState.SubtractMoney(Upkeep[BuildType]);
+            GameState.SubtractMoney(BuildingUpkeep[BuildType]);
         }
         
         

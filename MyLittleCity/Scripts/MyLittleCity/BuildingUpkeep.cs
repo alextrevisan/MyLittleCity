@@ -1,6 +1,6 @@
 ﻿namespace MyLittleCity.Scripts.MyLittleCity
 {
-    public struct Upkeep
+    public struct BuildingUpkeep
     {
         public int this[BuildType buildType]
         {
@@ -9,29 +9,24 @@
                 switch (buildType)
                 {
                     case BuildType.LowDensityResidential:
-                        return LowDensityResidentialPrice;
+                        return 0;
                     
                     case BuildType.ResidentialUpgrade:
-                        return LowDensityResidentialPrice;
+                        return 0;
                     
                     case BuildType.LowDensityComercial:
-                        return LowDensityComercialPrice;
+                        return 0;
                     
                     case BuildType.LowDensityIndustrial:
-                        return LowDensityIndustrialPrice;
+                        return 0;
                     
                     case BuildType.Road:
-                        return RoadPrice;
+                        return 1;
                     
                     default:
                         return 0;
                 }
             }
         }
-
-        private const int LowDensityResidentialPrice = 0;
-        private const int LowDensityComercialPrice = 0;
-        private const int LowDensityIndustrialPrice = 0;
-        private const int RoadPrice = 1;
     }
 }

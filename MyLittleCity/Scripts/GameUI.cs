@@ -21,7 +21,7 @@ namespace MyLittleCity.Scripts
 		private const int MenuMoveScale = 10;
 		
 		private BuildPrices BuildPrices { get; }
-		private Upkeep Upkeep { get; }
+		private BuildingUpkeep BuildingUpkeep { get; }
 		private MenuItemToBuildType MenuItemToBuildType { get; }
 		
 		public override void _Ready()
@@ -106,13 +106,13 @@ namespace MyLittleCity.Scripts
 		private void UpdateCostLabel()
 		{
 			var currentBuildType = MenuItemToBuildType[_currentMenuSelected];
-			if (Upkeep[currentBuildType] == 0)
+			if (BuildingUpkeep[currentBuildType] == 0)
 			{
 				_costLabel.Text = $"$ {BuildPrices[_currentMenuSelected]}";
 				return;
 			}
 
-			_costLabel.Text = $"$ {BuildPrices[_currentMenuSelected]}/$ {Upkeep[currentBuildType]}";
+			_costLabel.Text = $"$ {BuildPrices[_currentMenuSelected]}/$ {BuildingUpkeep[currentBuildType]}";
 		}
 
 		public void UpdateUI()

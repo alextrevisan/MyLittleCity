@@ -12,8 +12,10 @@ namespace MyLittleCity.Scripts.MyLittleCity
         public BuildType BuildType { get; private set; }
         public int PowerAmount { get; set; }
 
-        protected static BuildTileIndex BuildTilesIndex { get; }
+        protected static BuildTileIndex BuildTileIndex { get; }
         protected static BuildTileOffset BuildTilesOffset { get; }
+        protected static BuildingUpkeep BuildingUpkeep { get; }
+        protected static ResidentialTaxGenerated ResidentialTaxGenerated { get; }
         
         protected readonly int X;
         protected readonly int Y;
@@ -33,7 +35,7 @@ namespace MyLittleCity.Scripts.MyLittleCity
 
         public virtual bool IsPowerLine()
         {
-            return true;
+            return false;
         }
 
         protected Vector2? GetNearestRoad()
@@ -68,15 +70,11 @@ namespace MyLittleCity.Scripts.MyLittleCity
             PowerAmount = 0;
             Removed = false;
             SetTimer();
-            var buildTileIndex = BuildTilesIndex[buildType];
+            var buildTileIndex = BuildTileIndex[buildType];
             TileMap.SetCell(x, y, buildTileIndex, false, false, false,
                 BuildTilesOffset[buildType]);
         }
 
-        protected static BuildTileIndex BuildTileIndex { get; }
-        protected static Upkeep Upkeep { get; }
-        protected static TaxGenerated TaxGenerated { get; }
-        
         public virtual void Remove()
         {
             Removed = true;

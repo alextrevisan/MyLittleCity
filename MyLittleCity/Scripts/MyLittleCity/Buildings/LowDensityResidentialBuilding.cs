@@ -76,7 +76,7 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
         public override void Tick()
         {
             base.Tick();
-            GameState.AddMoney(TaxGenerated[PopulationDensity]);
+            GameState.AddMoney(ResidentialTaxGenerated[PopulationDensity]);
         }
 
         private void ExecuteResidentialUpgrade()

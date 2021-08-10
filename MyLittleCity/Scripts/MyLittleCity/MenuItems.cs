@@ -10,8 +10,8 @@
         WindTurbineLow = 5,
         
         //Not in menu
-        WindTurbineHigh = 100,
-        ResidentialUpgrade = 9000,
+        ResidentialUpgrade = 1000,
+        WindTurbineHigh = 1001,
         
     }
 }

@@ -8,28 +8,17 @@ namespace MyLittleCity.Scripts
         {
             get
             {
-                switch (buildType)
+                return buildType switch
                 {
-                    case BuildType.LowDensityResidential:
-                        return 2;
-                    
-                    case BuildType.LowDensityComercial:
-                        return 3;
-                    
-                    case BuildType.LowDensityIndustrial:
-                        return 1;
-                    
-                    case BuildType.Road:
-                        return 0;
-                    case BuildType.WindTurbineLow:
-                        return 8;
-                    case BuildType.WindTurbineHigh:
-                        return 9;
-                    
-                    case BuildType.RemoveTile:
-                    default:
-                        return -1;
-                }
+                    BuildType.LowDensityResidential => 2,
+                    BuildType.LowDensityComercial => 3,
+                    BuildType.LowDensityIndustrial => 1,
+                    BuildType.Road => 0,
+                    BuildType.WindTurbineLow => 8,
+                    BuildType.WindTurbineHigh => 9,
+                    BuildType.RemoveTile => -1,
+                    _ => -1
+                };
             }
         }
     }

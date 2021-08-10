@@ -15,12 +15,6 @@ namespace MyLittleCity.Scripts
             _gameState = gameState;
         }
 
-        public void AddBuildingToTileMap(int x, int y, int buildTileIndex)
-        {
-            _tilemap.SetCell(x, y - 1, buildTileIndex, false, false, false,
-                Vector2.Zero);
-        }
-        
         public void ExecuteAction(MenuItems menuItem, int x, int y)
         {
             if (!CanExecuteAction(menuItem, x, y)) return;

@@ -1,5 +1,6 @@
 ﻿using Godot;
 using MyLittleCity.Scripts.MyLittleCity;
+using MyLittleCity.Scripts.MyLittleCity.Buildings;
 
 namespace MyLittleCity.Scripts
 {
@@ -26,44 +27,31 @@ namespace MyLittleCity.Scripts
             
             _gameState.SubtractMoney(BuildPrices[menuItem]);
 
-            _tilemap.SetCell(x, y, BuildTilesIndex[menuItem], false, false, false,
-                BuildTilesOffset[menuItem]);
-            if (menuItem == MenuItems.WindTurbine)
-            {
-                _tilemap.SetCell(x, y - 1, BuildTilesIndex[menuItem] + 1, false, false, false,
-                    BuildTilesOffset[menuItem]);
-            }
-            _tilemap.UpdateBitmaskRegion();
             _gameState.ExecuteAction(menuItem, x, y);
+            _tilemap.UpdateBitmaskRegion();
         }
 
         bool CanRemoveTile(int x, int y)
         {
-            return _gameState.Building[x][y] != null;
+            return GameState.Building[x][y] != null;
         }
-        
-        bool CanInsertTile(int x, int y)
+
+        private bool CanExecuteAction(MenuItems menuItem, int x, int y)
         {
-            return _gameState.Building[x][y] == null;
-        }
-        
-        private bool CanExecuteAction(MenuItems menuItems, int x, int y)
-        {
-            if (!HasMoney(menuItems))
+            if (!HasMoney(menuItem))
                 return false;
             
-            if (menuItems == MenuItems.RemoveTile)
+            if (menuItem == MenuItems.RemoveTile)
                 return CanRemoveTile(x, y);
             
-            return CanInsertTile(x, y);
+            return CanInserTileFor.Building(menuItem, x, y);
         }
 
         private bool HasMoney(MenuItems menuItem)
         {
             return _gameState.Money > BuildPrices[menuItem];
         }
-        private BuildTileOffset BuildTilesOffset { get; }
-        private BuildTileIndex BuildTilesIndex { get; }
+        
         private BuildPrices BuildPrices { get; }
     }
 }

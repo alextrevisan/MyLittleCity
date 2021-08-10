@@ -18,7 +18,7 @@ namespace MyLittleCity.Scripts
 		private DateTime _dateTime = new (1900, 1, 1);
 
 		public string DateString => $"{_dateTime:MMM yyyy}";
-		public List<List<Building?>> Building { get; } = new ();
+		public static List<List<Building?>> Building { get; } = new ();
 		
 		private TileMap? _tileMap;
 		private Navigation2D? _navigation2D;
@@ -58,8 +58,9 @@ namespace MyLittleCity.Scripts
 		{
 			if (menuItem == MenuItems.RemoveTile)
 			{
-				Building[x][y]?.Remove();
+				var building = Building[x][y];
 				Building[x][y] = null;
+				building?.Remove();
 			}
 			else
 			{

@@ -11,6 +11,7 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
         public LowDensityResidentialBuilding(GameState gameState, int x, int y, TileMap tileMap, Navigation2D navigation2D) : base(BuildType.LowDensityResidential, gameState, x, y, tileMap, navigation2D)
         {
             PopulationDensity = 0;
+            Timer.AutoReset = false;
         }
 
         public override void Remove()
@@ -24,46 +25,52 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
 
         protected override void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            Mutex.Lock();
-            base.OnTimedEvent(sender, e);
-            if (Removed)
-                return;
-            
-            var nearestRoad = GetNearestRoad();
-            
-            var houseHasRoad = nearestRoad is not null;
-
-            var maxDensity = houseHasRoad ? 1 : 0;
-            var topBuilding = GameState.Building[X][Y - 1];
-            if (topBuilding is not null && houseHasRoad)
+            lock (Mutex)
             {
-                if (topBuilding.BuildType is BuildType.LowDensityResidential or BuildType.ResidentialUpgrade &&
-                    ((LowDensityResidentialBuilding)topBuilding).PopulationDensity <= PopulationDensity)
-                    maxDensity = 2;
-            }
-            if(nearestRoad is not null)
-            {
-                var globalStartPos = TileMap.MapToWorld(new Vector2(-10,16));
-                var globalEndPos = TileMap.MapToWorld(new Vector2(X, Y));
-                
-                
-                var path = Navigation2D.GetSimplePath(globalStartPos, globalEndPos, false).ToList();
-
-                if (path.Count > 0 && !HasCar)
+                base.OnTimedEvent(sender, e);
+                if (Removed)
                 {
-                    HasCar = true;
-                    var ground = ResourceLoader.Load<PackedScene>("res://scenes/Car.tscn");
-                    var car = (Car)ground.Instance();
-                    car.SetBuilding(this);
-                    car.SetPath(path);
-                    TileMap.AddChild(car);
+                    return;
                 }
 
+                var nearestRoad = GetNearestRoad();
+
+                var houseHasRoad = nearestRoad is not null;
+
+                var maxDensity = houseHasRoad ? 1 : 0;
+                var topBuilding = GameState.Building[X][Y - 1];
+                if (topBuilding is not null && houseHasRoad)
+                {
+                    if (topBuilding.BuildType is BuildType.LowDensityResidential or BuildType.ResidentialUpgrade &&
+                        ((LowDensityResidentialBuilding)topBuilding).PopulationDensity <= PopulationDensity)
+                        maxDensity = 2;
+                }
+
+                if (nearestRoad is not null)
+                {
+                    var globalStartPos = TileMap.MapToWorld(new Vector2(-10, 16));
+                    var globalEndPos = TileMap.MapToWorld(new Vector2(X, Y));
+
+
+                    var path = Navigation2D.GetSimplePath(globalStartPos, globalEndPos, false).ToList();
+
+                    if (path.Count > 0 && !HasCar)
+                    {
+                        HasCar = true;
+                        var ground = ResourceLoader.Load<PackedScene>("res://scenes/Car.tscn");
+                        var car = (Car)ground.Instance();
+                        car.SetBuilding(this);
+                        car.SetPath(path);
+                        TileMap.AddChild(car);
+                    }
+
+                }
+
+                if (CarArrived)
+                    PopulationDensity = Math.Min(PopulationDensity + 1, maxDensity);
+                ExecuteResidentialUpgrade();
+                Timer.Start();
             }
-            if(CarArrived)
-                PopulationDensity = Math.Min(PopulationDensity + 1, maxDensity);
-            ExecuteResidentialUpgrade();
-            Mutex.Unlock();
         }
 
         public override void Tick()

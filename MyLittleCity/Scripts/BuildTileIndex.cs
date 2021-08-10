@@ -4,27 +4,29 @@ namespace MyLittleCity.Scripts
 {
     public struct BuildTileIndex
     {
-        public int this[MenuItems menuItem]
+        public int this[BuildType buildType]
         {
             get
             {
-                switch (menuItem)
+                switch (buildType)
                 {
-                    case MenuItems.LowDensityResidential:
+                    case BuildType.LowDensityResidential:
                         return 2;
                     
-                    case MenuItems.LowDensityComercial:
+                    case BuildType.LowDensityComercial:
                         return 3;
                     
-                    case MenuItems.LowDensityIndustrial:
+                    case BuildType.LowDensityIndustrial:
                         return 1;
                     
-                    case MenuItems.Road:
+                    case BuildType.Road:
                         return 0;
-                    case MenuItems.WindTurbine:
+                    case BuildType.WindTurbineLow:
                         return 8;
+                    case BuildType.WindTurbineHigh:
+                        return 9;
                     
-                    case MenuItems.RemoveTile:
+                    case BuildType.RemoveTile:
                     default:
                         return -1;
                 }

@@ -24,13 +24,16 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
                     return new LowDensityComercialBuilding(_gameState, x, y, _tileMap, _navigation2D);
                 case BuildType.LowDensityIndustrial:
                     return new LowDensityIndustrialBuilding(_gameState, x, y, _tileMap, _navigation2D);
-                case BuildType.WindTurbine:
-                    return new WindTurbine(_gameState, x, y, _tileMap, _navigation2D);
+                case BuildType.WindTurbineLow:
+                    return new WindTurbineLow(_gameState, x, y, _tileMap, _navigation2D);
+                case BuildType.WindTurbineHigh:
+                    return new WindTurbineHigh(_gameState, x, y, _tileMap, _navigation2D);
                 case BuildType.Road:
                     return new Road(_gameState, x, y, _tileMap, _navigation2D);
-                
                 case BuildType.ResidentialUpgrade:
+                    return new LowDensityResidentialUpgrade(_gameState, x, y, _tileMap, _navigation2D);
                 case BuildType.RemoveTile:
+                    return null;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(buildType), buildType, null);
             }

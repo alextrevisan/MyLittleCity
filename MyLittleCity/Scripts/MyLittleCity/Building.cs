@@ -12,13 +12,15 @@ namespace MyLittleCity.Scripts.MyLittleCity
         public BuildType BuildType { get; private set; }
         public int PowerAmount { get; set; }
 
-            
+        protected static BuildTileIndex BuildTilesIndex { get; }
+        protected static BuildTileOffset BuildTilesOffset { get; }
+        
         protected readonly int X;
         protected readonly int Y;
         protected readonly GameState GameState;
         public readonly TileMap TileMap;
         protected bool Removed;
-        private System.Timers.Timer _timer;
+        protected System.Timers.Timer Timer;
         protected static readonly Mutex Mutex = new ();
         protected readonly Navigation2D Navigation2D;
         private static Vector2 _startPos = new Vector2(-48, 58);
@@ -65,8 +67,10 @@ namespace MyLittleCity.Scripts.MyLittleCity
             Navigation2D = navigation2D;
             PowerAmount = 0;
             Removed = false;
-            
             SetTimer();
+            var buildTileIndex = BuildTilesIndex[buildType];
+            TileMap.SetCell(x, y, buildTileIndex, false, false, false,
+                BuildTilesOffset[buildType]);
         }
 
         protected static BuildTileIndex BuildTileIndex { get; }
@@ -76,29 +80,27 @@ namespace MyLittleCity.Scripts.MyLittleCity
         public virtual void Remove()
         {
             Removed = true;
+            TileMap.SetCell(X, Y, -1, false, false, false,
+                Vector2.Zero);
         }
 
         public virtual void Tick()
         {
 
         }
-
-        
-
-        
         
         private void SetTimer()
         {
-            _timer = new System.Timers.Timer(2000);
-            _timer.Elapsed += OnTimedEvent;
-            _timer.AutoReset = true;
-            _timer.Enabled = true;
+            Timer = new System.Timers.Timer(2000);
+            Timer.Elapsed += OnTimedEvent;
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
         }
 
         protected virtual void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             if(Removed)
-                _timer.Stop();
+                Timer.Stop();
         }
     }
 }

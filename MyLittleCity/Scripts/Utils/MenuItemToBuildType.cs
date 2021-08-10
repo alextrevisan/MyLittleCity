@@ -23,8 +23,10 @@ namespace MyLittleCity.Scripts.Utils
                         return BuildType.RemoveTile;
                     case MenuItems.ResidentialUpgrade:
                         return BuildType.ResidentialUpgrade;
-                    case MenuItems.WindTurbine:
-                        return BuildType.WindTurbine;
+                    case MenuItems.WindTurbineLow:
+                        return BuildType.WindTurbineLow;
+                    case MenuItems.WindTurbineHigh:
+                        return BuildType.WindTurbineHigh;
                     default:
                         Console.WriteLine($"Can't convert {menuItem.ToString()} to BuildType");
                         throw new Exception($"Can't convert {menuItem.ToString()} to BuildType");

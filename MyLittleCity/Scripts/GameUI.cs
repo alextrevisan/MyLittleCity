@@ -93,7 +93,7 @@ namespace MyLittleCity.Scripts
 
 		private void UpdateSelectedBuilding(int value)
 		{
-			if (_currentMenuSelected + value >= 0 && _currentMenuSelected + value <= MenuItems.WindTurbineLow)
+			if (_currentMenuSelected + value >= 0 && _currentMenuSelected + value <= MenuItems.PowerLine)
 			{
 				_selectedIconPosition.x += value * 10;
 				_menuPosition.x += -value * MenuMoveScale;

@@ -9,6 +9,7 @@ namespace MyLittleCity.Scripts.MyLittleCity
         LowDensityIndustrial = 2,
         Road = 3,
         WindTurbineLow = 4,
+        PowerLine = 5,
         RemoveTile = int.MaxValue,
         
         //acessories

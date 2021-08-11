@@ -27,6 +27,8 @@ namespace MyLittleCity.Scripts.Utils
                         return BuildType.WindTurbineLow;
                     case MenuItems.WindTurbineHigh:
                         return BuildType.WindTurbineHigh;
+                    case MenuItems.PowerLine:
+                        return BuildType.PowerLine;
                     default:
                         Console.WriteLine($"Can't convert {menuItem.ToString()} to BuildType");
                         throw new Exception($"Can't convert {menuItem.ToString()} to BuildType");

@@ -8,7 +8,13 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
             switch (menuItem)
             {
                 case MenuItems.WindTurbineLow:
-                    return GameState.Building[x][y] is null && GameState.Building[x][y - 1] is null;
+                    return (GameState.Building[x][y] is null or PowerLine) && (GameState.Building[x][y - 1] is null or PowerLine);
+                
+                case MenuItems.LowDensityResidential:
+                case MenuItems.LowDensityComercial:
+                case MenuItems.LowDensityIndustrial:
+                case MenuItems.Road:
+                    return GameState.Building[x][y] is null or PowerLine;
                 default:
                     return GameState.Building[x][y] is null;
             }

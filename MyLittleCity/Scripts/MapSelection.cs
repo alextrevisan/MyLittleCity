@@ -19,6 +19,7 @@ namespace MyLittleCity.Scripts
 			_sprites.Add(_selection1X);
 			_windTurbine = GetNode<AnimatedSprite>("wind_turbine");
 			_sprites.Add(_windTurbine);
+			_sprites.Add(_selection1X);
 		}
 		private void _on_GameUI_OnSelectedIconPosition(int index)
 		{

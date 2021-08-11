@@ -32,6 +32,8 @@ namespace MyLittleCity.Scripts.MyLittleCity.Buildings
                     return new Road(_gameState, x, y, _tileMap, _navigation2D);
                 case BuildType.ResidentialUpgrade:
                     return new LowDensityResidentialUpgrade(_gameState, x, y, _tileMap, _navigation2D);
+                case BuildType.PowerLine:
+                    return new PowerLine(_gameState, x, y, _tileMap, _navigation2D);
                 case BuildType.RemoveTile:
                     return null;
                 default:

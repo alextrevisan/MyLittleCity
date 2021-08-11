@@ -16,6 +16,7 @@ namespace MyLittleCity.Scripts
                     BuildType.Road => 0,
                     BuildType.WindTurbineLow => 8,
                     BuildType.WindTurbineHigh => 9,
+                    BuildType.PowerLine => 10,
                     BuildType.RemoveTile => -1,
                     _ => -1
                 };

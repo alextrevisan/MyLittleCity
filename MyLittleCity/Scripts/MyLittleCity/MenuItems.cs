@@ -8,6 +8,7 @@
         Road = 3,
         RemoveTile = 4,
         WindTurbineLow = 5,
+        PowerLine = 6,
         
         //Not in menu
         ResidentialUpgrade = 1000,
